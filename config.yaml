@@ -1,0 +1,41 @@
+# === Input Source ===
+input:
+  source: 0                      # 0 for webcam, or path to a video file
+  frame_width: 640
+  frame_height: 480
+  fps: 30
+
+# === Model Settings ===
+models:
+  action_recognition:
+    model_path: models/action_recognition/model.h5
+    input_size: [64, 64, 3]
+    sequence_length: 16
+
+  anomaly_detection:
+    model_path: models/anomaly_detection/model.h5
+    threshold: 0.7
+
+# === Processing ===
+processing:
+  frame_stride: 2               # Use every Nth frame for analysis
+  clip_length: 16               # Number of frames per action clip
+  resize: [224, 224]            # Resize frames before feeding into model
+
+# === Output ===
+output:
+  save_video: true
+  output_path: outputs/detected_output.mp4
+  draw_labels: true
+  show_video: true              # Whether to display the video window live
+
+# === Alerting ===
+alerts:
+  enabled: false
+  method: log                   # Options: log, email, webhook, etc.
+  webhook_url: ""               # For Slack, Discord, etc.
+
+# === Logging ===
+logging:
+  level: INFO
+  log_path: logs/theft_detection.log

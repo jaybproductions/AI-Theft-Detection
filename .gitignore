@@ -1,0 +1,64 @@
+__pycache__/
+*.pyc
+
+venv/
+.venv/
+.env
+
+# Jupyter Notebooks
+.ipynb_checkpoints/
+
+# Logs and debug
+*.log
+logs/
+
+
+# Output files
+*.mp4
+*.avi
+outputs/
+detections/
+
+# TensorFlow & Keras
+checkpoints/
+*.h5
+*.pb
+*.tflite
+saved_model/
+training/
+
+# VS Code
+.vscode/
+
+# PyCharm
+.idea/
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+desktop.ini
+
+# PIP
+pip-log.txt
+
+# Coverage & testing
+htmlcov/
+.coverage
+.tox/
+.pytest_cache/
+nosetests.xml
+coverage.xml
+*.cover
+.cache
+
+# Build artifacts
+build/
+dist/
+*.egg-info/
+*.egg
+
+# Others
+*.bak
+*.swp
