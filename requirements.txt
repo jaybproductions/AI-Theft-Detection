@@ -1,0 +1,26 @@
+# Deep learning
+tensorflow       # Core ML framework
+tensorflow-addons  # Optional: extra layers, metrics, etc.
+
+# Video and image processing
+opencv-python
+imageio
+ffmpeg-python
+
+# Data manipulation
+numpy
+pandas
+scikit-learn
+
+# Visualization
+matplotlib
+seaborn
+tqdm
+
+# Streamlit for real-time UI (optional but recommended for prototyping)
+streamlit
+
+# Configuration & utilities
+PyYAML
+loguru
+requests
