@@ -7,4 +7,7 @@ Examples:
 - Synthetic theft scenario clips
 - Public datasets (if applicable)
 
+
+❗️❗️❗️add a demo_video.mp4 if no webcam is detected
+
 ❗️ Do not modify the contents of this folder directly. All preprocessing should be handled via scripts and saved to `data/processed/`.
