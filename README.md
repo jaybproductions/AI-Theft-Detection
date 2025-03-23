@@ -73,7 +73,7 @@ You can adjust the number of clips and sequence length in the script.
 
 ### Step 2: Train the Model
 
-This will load the generated clips and labels, train the CNN+RNN model, and save it to `models/action_recognition/model.h5`.
+This will load the generated clips and labels, train the CNN+RNN model, and save it to `models/action_recognition/model.keras`.
 
 ```bash
 python scripts/train_model.py
@@ -88,7 +88,7 @@ Model configuration (input size, sequence length, training parameters) is define
 ```yaml
 models:
   action_recognition:
-    model_path: models/action_recognition/model.h5
+    model_path: models/action_recognition/model.keras
     input_size: [224, 224, 3]
     sequence_length: 16
     num_classes: 2
