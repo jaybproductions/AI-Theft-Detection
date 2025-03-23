@@ -10,8 +10,13 @@ This document tracks the remaining implementation tasks for the theft detection 
 - [x] `run.py` and `config.yaml` loader
 - [x] Webcam/video input handling with fallback to demo video
 - [x] Frame buffering and preprocessing (`preprocess_clip()`)
-- [x] Mock action recognition model for testing
 - [x] Real-time detection and visual overlays using `draw_prediction()`
+- [x] Mock model replaced with real TensorFlow model
+- [x] Model training pipeline using `.npy` clips and `labels.csv`
+- [x] Script to generate mock `.npy` clips
+- [x] Script to generate `labels.csv`
+- [x] Combined script to generate mock dataset
+- [x] Model saved as `model.h5` and loaded in detection pipeline
 
 ---
 
@@ -19,9 +24,9 @@ This document tracks the remaining implementation tasks for the theft detection 
 
 ### 🔹 Action Recognition
 
-- [ ] Replace `MockActionRecognitionModel` with a real TensorFlow model
-- [ ] Add model loading using `tf.keras.models.load_model()`
-- [ ] Normalize input shape, dtype, and batch dimension
+- [x] Replace `MockActionRecognitionModel` with a real TensorFlow model
+- [x] Add model loading using `tf.keras.models.load_model()`
+- [x] Normalize input shape, dtype, and batch dimension
 - [ ] Create and use a label map (e.g., `label_map.json`)
 
 ### 🔹 Anomaly Detection (Optional)
@@ -36,9 +41,9 @@ This document tracks the remaining implementation tasks for the theft detection 
 
 ### 📁 `scripts/`
 
-- [ ] `prepare_data.py`: Extract and save preprocessed clips
+- [x] `generate_mock_dataset.py`: Create clips + labels
+- [x] `train_model.py`: Train and save model
 - [ ] `evaluate.py`: Compute evaluation metrics (accuracy, F1, etc.)
-- [ ] `generate_synthetic.py`: Generate synthetic clips for data augmentation
 
 ---
 
@@ -46,8 +51,8 @@ This document tracks the remaining implementation tasks for the theft detection 
 
 ### 📁 `models/`
 
-- [ ] `action_recognition/model.py`: Load or define real model architecture
-- [ ] `action_recognition/train.py`: Training logic for action recognition
+- [x] `action_recognition/model.py`: Load and build model architecture
+- [x] `action_recognition/train.py`: Training logic for action recognition
 - [ ] `anomaly_detection/autoencoder.py`: Define a basic anomaly model
 - [ ] `anomaly_detection/train.py`: Train anomaly detection model
 
