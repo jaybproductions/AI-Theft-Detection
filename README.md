@@ -55,6 +55,52 @@ pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
+
+---
+
+## 🧠 Training the Model
+
+### Step 1: Generate Mock Dataset
+
+This will create synthetic `.npy` video clips and a `labels.csv` file in `data/processed/`:
+
+```bash
+python scripts/generate_mock_dataset.py
+```
+
+You can adjust the number of clips and sequence length in the script.
+
+---
+
+### Step 2: Train the Model
+
+This will load the generated clips and labels, train the CNN+RNN model, and save it to `models/action_recognition/model.h5`.
+
+```bash
+python scripts/train_model.py
+```
+
+Model configuration (input size, sequence length, training parameters) is defined in `config.yaml`.
+
+---
+
+### Example Config (in `config.yaml`)
+
+```yaml
+models:
+  action_recognition:
+    model_path: models/action_recognition/model.h5
+    input_size: [224, 224, 3]
+    sequence_length: 16
+    num_classes: 2
+
+training:
+  clips_dir: data/processed/clips
+  labels_csv: data/processed/labels.csv
+  batch_size: 8
+  epochs: 10
+```
+
 ---
 
 ## ⚙️ Configuration
@@ -115,15 +161,6 @@ We evaluate the model using:
 - False positive/negative rate
 - Response time
 - Robustness in real-world environments
-
----
-
-## ✅ To-Do
-
-- [ ] Build training pipeline for action recognition
-- [ ] Integrate anomaly detection models
-- [ ] Add alerting system (email/SMS/Slack)
-- [ ] Streamlit dashboard for live feedback
 
 ---
 
