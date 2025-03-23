@@ -200,12 +200,6 @@ Customize it for:
 python run.py
 ```
 
-### Run the video preprocessor:
-
-```bash
-python scripts/prepare_data.py --input ./data/raw/video1.mp4
-```
-
 ---
 
 ## 🧪 Folder Structure
