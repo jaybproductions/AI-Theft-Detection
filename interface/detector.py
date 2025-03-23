@@ -35,6 +35,9 @@ def run_detection(cap, config):
             print("⚠️ Frame capture failed.")
             break
 
+                    #make the video out smaller
+        frame = cv2.resize(frame, (640, 480))
+
         # Add every Nth frame to buffer
         if frame_count % frame_stride == 0:
             clip_buffer.append(frame)
