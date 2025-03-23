@@ -9,12 +9,12 @@ input:
 # === Model Settings ===
 models:
   action_recognition:
-    model_path: models/action_recognition/model.h5
+    model_path: models/action_recognition/model.keras
     input_size: [224, 224, 3]
     sequence_length: 16
 
   anomaly_detection:
-    model_path: models/anomaly_detection/model.h5
+    model_path: models/anomaly_detection/model.keras
     threshold: 0.7
 
 # === Processing ===
@@ -45,4 +45,4 @@ training:
   clips_dir: data/processed/clips
   labels_csv: data/processed/labels.csv
   batch_size: 8
-  epochs: 10
+  epochs: 5

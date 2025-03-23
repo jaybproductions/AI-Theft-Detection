@@ -62,3 +62,8 @@ dist/
 # Others
 *.bak
 *.swp
+*.npy
+
+# trained models
+*.h5
+*.keras

@@ -55,7 +55,6 @@ pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
-
 ---
 
 ## 🧠 Training the Model
@@ -100,6 +99,80 @@ training:
   batch_size: 8
   epochs: 10
 ```
+
+---
+
+## 🎥 Using Your Own Videos for Training
+
+To train the model with your own footage (e.g., security camera recordings), follow these steps:
+
+### 1. Add Your Videos
+
+Place your MP4 videos inside the following directory:
+
+```
+data/raw/
+```
+
+Example filenames:
+```
+normal_1.mp4
+normal_2.mp4
+suspicious_1.mp4
+suspicious_2.mp4
+```
+
+> You can name them however you like, as long as you update the mapping in the preprocessing script.
+
+---
+
+### 2. Update the Label Map
+
+In `scripts/preprocess_real_videos.py`, update the list of video files and their associated labels:
+
+```python
+video_files = [
+    "normal_1.mp4",
+    "normal_2.mp4",
+    "suspicious_1.mp4",
+    "suspicious_2.mp4",
+]
+
+label_map = {
+    "normal_1.mp4": 0,
+    "normal_2.mp4": 0,
+    "suspicious_1.mp4": 1,
+    "suspicious_2.mp4": 1,
+}
+```
+
+---
+
+### 3. Run Preprocessing
+
+This script will:
+- Extract clips of 16 frames each from your videos
+- Resize them to 224x224
+- Label and save them as `.npy` files
+- Generate `data/processed/labels.csv`
+
+Run the script:
+
+```bash
+python scripts/preprocess_real_videos.py
+```
+
+You can tweak the `SEQUENCE_LENGTH`, `FRAME_STRIDE`, or `MAX_CLIPS_PER_VIDEO` at the top of the script.
+
+---
+
+Once preprocessing is complete, you can proceed with:
+
+```bash
+python scripts/train_model.py
+```
+
+This will train the model on your labeled video data and save the new model file to `models/action_recognition/model.keras`.
 
 ---
 
