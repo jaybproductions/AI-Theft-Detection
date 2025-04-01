@@ -1,5 +1,13 @@
 import cv2
 from interface.detector import run_detection
+from utils.config import load_label_map
+
+# Load label map
+label_map = load_label_map()
+
+def get_label_name(label_id):
+    return label_map.get(str(label_id), "Unknown")
+
 
 def run_inference(config):
     input_config = config.get("input", {})

@@ -3,6 +3,14 @@ import cv2
 import numpy as np
 import csv
 from tqdm import tqdm
+from utils.config import load_label_map
+
+# Load label map
+label_map = load_label_map()
+
+def get_label_name(label_id):
+    return label_map.get(str(label_id), "Unknown")
+
 
 SEQUENCE_LENGTH = 16
 RESIZE_SHAPE = (224, 224)
