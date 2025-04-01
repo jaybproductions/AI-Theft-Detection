@@ -4,6 +4,14 @@ import tensorflow as tf
 from utils.video_utils import preprocess_clip
 from models.action_recognition.model import load_action_recognition_model
 from interface.visualizer import draw_prediction
+from utils.config import load_label_map
+
+# Load label map
+label_map = load_label_map()
+
+def get_label_name(label_id):
+    return label_map.get(str(label_id), "Unknown")
+
 
 def run_detection(cap, config):
     """
