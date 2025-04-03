@@ -1,6 +1,5 @@
 {
-  "0": "No Threat",
-  "1": "Person Detected",
-  "2": "Suspicious Activity",
-  "3": "Theft"
+  "0": "Normal",
+  "1": "Theft"
 }
+
