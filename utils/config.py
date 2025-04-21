@@ -20,3 +20,9 @@ def load_config(config_path: str) -> dict:
             return config
         except yaml.YAMLError as e:
             raise ValueError(f"Error parsing YAML config: {e}")
+
+
+def load_label_map():
+    """Load and return label map from JSON."""
+    with open('data/processed/label_map.json', 'r') as f:
+        return json.load(f)
