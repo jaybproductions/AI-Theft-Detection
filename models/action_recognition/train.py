@@ -61,7 +61,7 @@ def train(config):
     )
 
     print(f"💾 Saving model to {save_path}")
-    model.save(save_path, save_format='keras')
+    model.save(save_path)
 
 
     return model, history

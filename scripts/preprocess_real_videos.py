@@ -14,8 +14,8 @@ def get_label_name(label_id):
 
 SEQUENCE_LENGTH = 16
 RESIZE_SHAPE = (224, 224)
-FRAME_STRIDE = 5
-MAX_CLIPS_PER_VIDEO = 100
+FRAME_STRIDE = 2
+MAX_CLIPS_PER_VIDEO = 300
 
 CLIP_OUTPUT_DIR = "data/processed/clips"
 LABELS_CSV_PATH = "data/processed/labels.csv"
@@ -88,6 +88,8 @@ if __name__ == "__main__":
         "shopping2.mp4",
         "stealing1.mp4",
         "stealing2.mp4",
+        "normal1.mp4",
+        "theft1.mp4",
     ]
 
     label_map = {
@@ -95,6 +97,8 @@ if __name__ == "__main__":
         "shopping2.mp4": 0,
         "stealing1.mp4": 1,
         "stealing2.mp4": 1,
+        "normal1.mp4": 0,
+        "theft1.mp4": 1,
     }
 
     preprocess_videos(video_files, label_map)

@@ -26,9 +26,13 @@ def run_inference(config):
             print(f"🚫 Failed to open fallback video: {fallback_video}")
             return
 
-    # Set video properties (only applies to webcam, mostly)
+    # Set video properties
     cap.set(cv2.CAP_PROP_FRAME_WIDTH, input_config.get("frame_width", 640))
     cap.set(cv2.CAP_PROP_FRAME_HEIGHT, input_config.get("frame_height", 480))
     cap.set(cv2.CAP_PROP_FPS, input_config.get("fps", 30))
+
+    # Show actual FPS from camera (may differ from set value)
+    actual_fps = cap.get(cv2.CAP_PROP_FPS)
+    print(f"📷 Actual FPS from source: {actual_fps:.2f}")
 
     run_detection(cap, config)
