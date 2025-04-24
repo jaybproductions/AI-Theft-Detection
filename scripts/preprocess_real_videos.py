@@ -2,20 +2,13 @@ import os
 import cv2
 import numpy as np
 import csv
+import glob
 from tqdm import tqdm
-from utils.config import load_label_map
-
-# Load label map
-label_map = load_label_map()
-
-def get_label_name(label_id):
-    return label_map.get(str(label_id), "Unknown")
-
 
 SEQUENCE_LENGTH = 16
 RESIZE_SHAPE = (224, 224)
-FRAME_STRIDE = 2
-MAX_CLIPS_PER_VIDEO = 300
+FRAME_STRIDE = 6
+MAX_CLIPS_PER_VIDEO = 30
 
 CLIP_OUTPUT_DIR = "data/processed/clips"
 LABELS_CSV_PATH = "data/processed/labels.csv"
@@ -38,7 +31,6 @@ def extract_clips_from_video(video_path, label, start_index):
         frame_index += 1
         pbar.update(1)
 
-        # Skip frames based on stride
         if frame_index % FRAME_STRIDE != 0:
             continue
 
@@ -48,7 +40,7 @@ def extract_clips_from_video(video_path, label, start_index):
         if len(buffer) == SEQUENCE_LENGTH:
             clip = np.array(buffer).astype(np.float32) / 255.0
             clips.append((clip, label))
-            buffer = []  # non-overlapping clips
+            buffer.pop(0)  # sliding window instead of resetting buffer
             clip_index += 1
 
             if clip_index >= MAX_CLIPS_PER_VIDEO:
@@ -58,7 +50,7 @@ def extract_clips_from_video(video_path, label, start_index):
     pbar.close()
     return clips
 
-def preprocess_videos(video_files, label_map):
+def preprocess_videos(video_files_with_paths, label_map):
     os.makedirs(CLIP_OUTPUT_DIR, exist_ok=True)
 
     index = 1
@@ -66,9 +58,9 @@ def preprocess_videos(video_files, label_map):
         writer = csv.writer(csvfile)
         writer.writerow(["clip", "label"])
 
-        for video_name in video_files:
-            label = label_map[video_name]
-            video_path = os.path.join("data/raw", video_name)
+        for video_path in video_files_with_paths:
+            filename = os.path.basename(video_path)
+            label = label_map[filename]
 
             clips = extract_clips_from_video(video_path, label, index)
 
@@ -83,22 +75,20 @@ def preprocess_videos(video_files, label_map):
     print(f"📝 Labels saved to {LABELS_CSV_PATH}")
 
 if __name__ == "__main__":
-    video_files = [
-        "shopping1.mp4",
-        "shopping2.mp4",
-        "stealing1.mp4",
-        "stealing2.mp4",
-        "normal1.mp4",
-        "theft1.mp4",
-    ]
+    normal_dir = "data/raw/normal"
+    suspicious_dir = "data/raw/suspicious"
 
-    label_map = {
-        "shopping1.mp4": 0,
-        "shopping2.mp4": 0,
-        "stealing1.mp4": 1,
-        "stealing2.mp4": 1,
-        "normal1.mp4": 0,
-        "theft1.mp4": 1,
-    }
+    normal_files = glob.glob(os.path.join(normal_dir, "*.mp4"))
+    suspicious_files = glob.glob(os.path.join(suspicious_dir, "*.mp4"))
 
-    preprocess_videos(video_files, label_map)
+    all_files = normal_files + suspicious_files
+    video_files_with_paths = all_files
+
+    label_map = {}
+    for f in normal_files:
+        label_map[os.path.basename(f)] = 0
+    for f in suspicious_files:
+        label_map[os.path.basename(f)] = 1
+
+    preprocess_videos(video_files_with_paths, label_map)
+    print("🎥 Preprocessing complete!")
