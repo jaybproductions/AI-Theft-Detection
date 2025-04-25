@@ -111,7 +111,8 @@ To train the model with your own footage (e.g., security camera recordings), fol
 Place your MP4 videos inside the following directory:
 
 ```
-data/raw/
+data/raw/normal
+data/raw/suspicious
 ```
 
 Example filenames:
@@ -128,22 +129,7 @@ suspicious_2.mp4
 
 ### 2. Update the Label Map
 
-In `scripts/preprocess_real_videos.py`, update the list of video files and their associated labels:
-
-```python
-video_files = [
-    "normal_1.mp4",
-    "normal_2.mp4",
-    "suspicious_1.mp4",
-    "suspicious_2.mp4",
-]
-
-label_map = {
-    "normal_1.mp4": 0,
-    "normal_2.mp4": 0,
-    "suspicious_1.mp4": 1,
-    "suspicious_2.mp4": 1,
-}
+In `scripts/preprocess_real_videos.py`, the label map is dynamically generating based on the folder structure and the filenames. 
 ```
 
 ---
