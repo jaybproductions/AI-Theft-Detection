@@ -1,5 +1,7 @@
 import os
 import tensorflow as tf
+from keras.models import load_model
+from keras.callbacks import EarlyStopping, ModelCheckpoint
 from models.action_recognition.model import build_cnn_rnn_model
 from utils.video_utils import ClipDataGenerator
 
@@ -13,32 +15,56 @@ def train(config):
 
     clips_dir = config["training"]["clips_dir"]
     labels_csv = config["training"]["labels_csv"]
+    batch_size = config["training"].get("batch_size", 16)
     save_path = model_config["model_path"]
+    initial_epoch = config["training"].get("initial_epoch", 0)
+    total_epochs = config["training"]["epochs"]
 
+    # === Load Data ===
     print("📦 Loading data generator...")
     train_generator = ClipDataGenerator(
         clip_dir=clips_dir,
         labels_csv=labels_csv,
-        batch_size=16,
+        batch_size=batch_size,
         input_shape=(sequence_length, *input_size),
         shuffle=True,
     )
 
-    print("🧠 Building model...")
-    model = build_cnn_rnn_model(
-        input_shape=(sequence_length, *input_size),
-        num_classes=num_classes
-    )
+    # === Load model if exists, else build new ===
+    if os.path.exists(save_path):
+        print(f"🔁 Resuming from: {save_path}")
+        model = load_model(save_path)
+    else:
+        print("🧠 Building new model...")
+        model = build_cnn_rnn_model(
+            input_shape=(sequence_length, *input_size),
+            num_classes=num_classes
+        )
     model.summary()
 
-    print("🚀 Training model...")
+    # === Callbacks ===
+    callbacks = [
+        EarlyStopping(patience=5, restore_best_weights=True),
+        ModelCheckpoint(
+            filepath="models/action_recognition/best_model.keras",
+            monitor="loss",
+            save_best_only=True,
+            verbose=1
+        )
+    ]
+
+    # === Train ===
+    print(f"🚀 Training from epoch {initial_epoch} to {total_epochs}")
     model.fit(
         train_generator,
-        epochs=config["training"]["epochs"],
+        epochs=total_epochs,
+        initial_epoch=initial_epoch,
+        callbacks=callbacks,
         verbose=1
     )
 
-    print(f"💾 Saving model to {save_path}")
+    # === Save final model ===
+    print(f"💾 Saving final model to: {save_path}")
     model.save(save_path)
 
     return model

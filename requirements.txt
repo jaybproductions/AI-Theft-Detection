@@ -1,5 +1,5 @@
 # Deep learning
-tensorflow       # Core ML framework
+tensorflow-gpu       # Core ML framework
 tensorflow-addons  # Optional: extra layers, metrics, etc.
 
 # Video and image processing

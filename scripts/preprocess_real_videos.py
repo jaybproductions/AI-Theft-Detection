@@ -7,8 +7,8 @@ from tqdm import tqdm
 
 SEQUENCE_LENGTH = 16
 RESIZE_SHAPE = (224, 224)
-FRAME_STRIDE = 6
-MAX_CLIPS_PER_VIDEO = 30
+FRAME_STRIDE = 4
+MAX_CLIPS_PER_VIDEO = 50
 
 CLIP_OUTPUT_DIR = "data/processed/clips"
 LABELS_CSV_PATH = "data/processed/labels.csv"

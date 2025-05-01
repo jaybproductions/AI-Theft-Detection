@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 import os
-from keras.api.utils import Sequence  # ✅ Correct import
+from keras.api.keras.utils import Sequence  # ✅ Correct import
 
 # === Frame and Clip Preprocessing ===
 

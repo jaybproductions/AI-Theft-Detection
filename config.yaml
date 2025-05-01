@@ -45,4 +45,5 @@ training:
   clips_dir: data/processed/clips
   labels_csv: data/processed/labels.csv
   batch_size: 8
-  epochs: 5
+  epochs: 10         # total target
+  initial_epoch: 0  # where to resume from
